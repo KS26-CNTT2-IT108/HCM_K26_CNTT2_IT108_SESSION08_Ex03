@@ -1,0 +1,32 @@
+SESSION08
+Bài 3 : Thống kê sự cố TIMEOUT trên máy chủ
+
+Tên lớp: HCM K26 CNTT2
+Môn học: Nhập môn công nghệ thông tin
+Họ và tên: LƯƠNG THANH THƯ
+
+
+Phần 1: Phân tích.
+
+- Bước 1: Get-Content
+    + Đọc tệp log theo luồng
+    + Mỗi dòng là 1 object
+      
+- Bước 2: Lọc từ khóa
+    + Select-String "TIMEOUT": giữ dòng chứa TIMEOUT
+    + Where-Object { $_ -notmatch "NOT TIMEOUT" }: bỏ dòng NOT TIMEOUT
+        
+- Bước 3: .Count
+    + Đếm số object còn lại
+    + Ra 1 con số duy nhất
+
+Phần 2: Triển khai
+powershell
+
+@(Get-Content access.log | Select-String "TIMEOUT" | Where-Object { $_ -notmatch "NOT TIMEOUT" }).Count
+
+
+Select-String "TIMEOUT": giữ dòng chứa TIMEOUT.
+Where-Object { $_ -notmatch "NOT TIMEOUT" }: loại dòng NOT TIMEOUT (xử lý bẫy).
+@( ... ).Count: đếm, luôn ra số kể cả khi chỉ có 1 dòng.
+
